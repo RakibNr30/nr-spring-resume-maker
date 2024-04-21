@@ -39,8 +39,12 @@ Before running the application, ensure you have the following installed:
 
 3. Configuration
    ```sh
-   make copy from src/main/resource/application.properties.example to src/main/resource/application.properties and configure it properly
-   make copy from src/main/resource/liquibase.properties.example to src/main/resource/liquibase.properties and configure it properly
+   cp src/main/resource/application.properties.example src/main/resource/application.properties
+   ```
+   ```sh
+   cp src/main/resource/liquibase.properties.example src/main/resource/liquibase.properties
+   ```
+   configure all properties properly
 
 ### Run the Application
    To run the application, add new configuration of apache tomcat.
