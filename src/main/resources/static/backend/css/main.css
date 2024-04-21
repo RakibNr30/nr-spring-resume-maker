@@ -1,0 +1,105 @@
+:root {
+    --primary: #4e73df;
+    --secondary: #858796;
+    --success: #1cc88a;
+    --info: #36b9cc;
+    --warning: #f6c23e;
+    --danger: #e74a3b;
+    --light: #f8f9fc;
+    --dark: #5a5c69;
+}
+
+table.dataTable > thead .sorting:before,
+table.dataTable > thead .sorting_asc:before,
+table.dataTable > thead .sorting_desc:before,
+table.dataTable > thead .sorting_asc_disabled:before,
+table.dataTable > thead .sorting_desc_disabled:before {
+    right: 1.4em;
+    font-family: "Font Awesome 5 Free", serif;
+    content: "\f062";
+}
+table.dataTable > thead .sorting:after,
+table.dataTable > thead .sorting_asc:after,
+table.dataTable > thead .sorting_desc:after,
+table.dataTable > thead .sorting_asc_disabled:after,
+table.dataTable > thead .sorting_desc_disabled:after {
+    right: 0.5em;
+    font-family: "Font Awesome 5 Free", serif;
+    content: "\f063";
+}
+table.dataTable .action {
+    text-align: center;
+    white-space: nowrap;
+    width: 100px;
+}
+table.dataTable .action .btn {
+    padding: 0.275rem 0.5rem;
+    border: 1px solid var(--secondary);
+}
+table.dataTable .serial-head,
+table.dataTable .serial {
+    width: 35px;
+}
+table.dataTable .serial {
+    text-align: center;
+}
+label {
+    font-weight: bold !important;
+}
+.auth-form {
+    max-width: 400px;
+    margin: auto;
+    transform: translate(0, 50%);
+}
+
+/* content header */
+.page-header.page-header-light {
+    color: rgba(33, 40, 50, 0.5);
+}
+.page-header-compact .page-header-content {
+    padding: 0;
+}
+.page-header.page-header-light .page-header-title {
+    color: #212832;
+}
+.page-header .page-header-content .page-header-title {
+    line-height: normal;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+}
+.page-header-compact .page-header-content .page-header-title {
+    font-size: 1rem;
+}
+.page-header.page-header-light .page-header-title .page-header-icon {
+    color: rgba(33, 40, 50, 0.6);
+}
+.page-header .page-header-content .page-header-title .page-header-icon {
+    margin-right: 0.5rem;
+    display: inline-flex;
+}
+.page-header-compact .page-header-content .page-header-title .page-header-icon .feather {
+    height: 1rem;
+    width: 1rem;
+}
+/* content header end */
+
+/* nav link */
+.nav-borders .nav-link.active {
+    color: #0061f2;
+    border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding: 0.5rem 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+/* file */
+.img-account-profile {
+    cursor: pointer;
+}

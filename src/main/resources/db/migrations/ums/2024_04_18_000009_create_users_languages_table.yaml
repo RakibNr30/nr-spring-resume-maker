@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_users_languages_table
+      author: Abdur Rakib
+      changes:
+        - createTable:
+            tableName: users_languages
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: users_languages_pkey
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: language_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: proficiency
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+        - addAutoIncrement:
+            columnName: id
+            generationType: IDENTITY
+            tableName: users_languages
+        - addUniqueConstraint:
+            columnNames: user_id, language_id
+            constraintName: uk_users_languages_user_id_language_id
+            tableName: users_languages
+        - addForeignKeyConstraint:
+            constraintName: fk_users_languages_user_id
+            baseColumnNames: user_id
+            baseTableName: users_languages
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+        - addForeignKeyConstraint:
+            constraintName: fk_users_languages_language_id
+            baseColumnNames: language_id
+            baseTableName: users_languages
+            referencedColumnNames: id
+            referencedTableName: languages
+            validate: true
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION

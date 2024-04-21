@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_user_educations_table
+      author: Abdur Rakib
+      changes:
+        - createTable:
+            tableName: user_educations
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_educations_pkey
+              - column:
+                  name: institute
+                  type: VARCHAR(255)
+              - column:
+                  name: degree
+                  type: VARCHAR(255)
+              - column:
+                  name: grade
+                  type: VARCHAR(255)
+              - column:
+                  name: start_date
+                  type: date
+              - column:
+                  name: end_date
+                  type: date
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+        - addAutoIncrement:
+            columnName: id
+            generationType: IDENTITY
+            tableName: user_educations
+        - addForeignKeyConstraint:
+            constraintName: fk_user_educations_user_id
+            baseColumnNames: user_id
+            baseTableName: user_educations
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION

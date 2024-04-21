@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_users_social_accounts_table
+      author: Abdur Rakib
+      changes:
+        - createTable:
+            tableName: users_social_accounts
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: users_social_accounts_pkey
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: social_account_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+        - addAutoIncrement:
+            columnName: id
+            generationType: IDENTITY
+            tableName: users_social_accounts
+        - addUniqueConstraint:
+            columnNames: user_id, social_account_id
+            constraintName: uk_users_social_accounts_user_id_social_account_id
+            tableName: users_social_accounts
+        - addForeignKeyConstraint:
+            constraintName: fk_users_social_accounts_user_id
+            baseColumnNames: user_id
+            baseTableName: users_social_accounts
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+        - addForeignKeyConstraint:
+            constraintName: fk_users_social_accounts_social_account_id
+            baseColumnNames: social_account_id
+            baseTableName: users_social_accounts
+            referencedColumnNames: id
+            referencedTableName: social_accounts
+            validate: true
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION

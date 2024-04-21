@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'User Education Add', menuLevel1 = 'ums', menuLevel2 = 'user-education')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            User Education
+                        </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" th:href="@{/dashboard/ums/user-education}">
+                            <i class="fas fa-list"></i> User Education List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/notifier" />
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">User Education Add</h6>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/dashboard/ums/user-education/store}" th:object="${userEducation}" method="POST">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-4 gx-3">
+                            <label class="mb-1" for="user_id">User</label>
+                            <select id="user_id" th:name="user_id" class="form-control" th:classappend="${#fields.hasErrors('user') ? 'is-invalid' : ''}" aria-label="select" required>
+                                <option value="" selected>Select User</option>
+                                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+                            </select>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="start_date">Start Date</label>
+                            <input id="start_date" th:name="startDate" class="form-control" th:classappend="${#fields.hasErrors('startDate') ? 'is-invalid' : ''}" type="date" placeholder="Enter start date" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="end_date">End Date</label>
+                            <input id="end_date" th:name="endDate" class="form-control" th:classappend="${#fields.hasErrors('endDate') ? 'is-invalid' : ''}" type="date" placeholder="Enter end date">
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="institute">Institute</label>
+                            <input id="institute" th:field="*{institute}" class="form-control" th:classappend="${#fields.hasErrors('institute') ? 'is-invalid' : ''}" type="text" placeholder="Enter institute" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('institute')}" th:errors="*{institute}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="degree">Degree</label>
+                            <input id="degree" th:field="*{degree}" class="form-control" th:classappend="${#fields.hasErrors('degree') ? 'is-invalid' : ''}" type="text" placeholder="Enter degree" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('degree')}" th:errors="*{degree}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="grade">Grade</label>
+                            <input id="grade" th:field="*{grade}" class="form-control" th:classappend="${#fields.hasErrors('grade') ? 'is-invalid' : ''}" type="text" placeholder="Enter grade" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('grade')}" th:errors="*{grade}"></div>
+                        </div>
+                        <div class="col-12">
+                            <div class="float-right">
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

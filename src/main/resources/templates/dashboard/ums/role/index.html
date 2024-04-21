@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'Role List', menuLevel1 = 'ums', menuLevel2 = 'role')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            Role
+                        </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" th:href="@{/dashboard/ums/role/create}">
+                            <i class="fas fa-plus-square"></i> Add New Role
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/notifier" />
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Role List</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <th:block th:replace="/fragments/dashboard/table::header(${roles})"></th:block>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered dataTable no-footer" style="width: 100%;">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="serial-head sorting" id="id">SN</th>
+                                        <th class="sorting" id="name">Name</th>
+                                        <th class="sorting" id="createdAt">Created At</th>
+                                        <th class="sorting" id="updatedAt">Updated At</th>
+                                        <th class="action">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="role, loop : ${roles}" th:classappend="${loop.odd ? 'odd' : 'even'}">
+                                        <th scope="row" class="serial" th:text="${loop.index + 1}"></th>
+                                        <td th:text="${role.name}"></td>
+                                        <td th:text="${role.createdAt}"></td>
+                                        <td th:text="${role.updatedAt}"></td>
+                                        <td class="action">
+                                            <a th:href="@{/dashboard/ums/role/{id}(id=${role.id})}" class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                                <i class="fas fa-solid fa-eye"></i>
+                                            </a>
+                                            <form th:action="@{/dashboard/ums/role/{id}/destroy(id=${role.id})}" method="POST" style="all: unset">
+                                                <button type="submit" class="btn btn-datatable btn-icon btn-transparent-dark">
+                                                    <i class="fas fa-regular fa-trash text-danger"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <th:block th:replace="/fragments/dashboard/table::pagination(${roles}, '/dashboard/ums/role')"></th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/backend/js/dt-sorting.js}"></script>
+
+</section>
+</body>
+
+</html>

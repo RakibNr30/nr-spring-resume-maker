@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_roles_table
+      author: Abdur Rakib
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: roles_pkey
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+        - addAutoIncrement:
+            columnName: id
+            generationType: IDENTITY
+            tableName: roles
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: uk_roles_name
+            tableName: roles

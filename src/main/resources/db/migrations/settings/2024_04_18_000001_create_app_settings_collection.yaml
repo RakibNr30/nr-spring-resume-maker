@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_app_settings_collection
+      author: Abdur Rakib
+      changes:
+        - createCollection:
+            collectionName: app_settings

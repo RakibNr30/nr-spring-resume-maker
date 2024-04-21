@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="row" th:fragment="header(page)">
+    <div class="col-sm-12 col-md-6">
+        <div class="dataTables_length" id="dataTable_length">
+            <form id="sizeChangeForm" action="" method="GET">
+                <label>Show
+                    <input type="hidden" name="page" th:value="${page.number + 1}">
+                    <select name="size" class="custom-select custom-select-sm form-control form-control-sm" onchange="submitForm('sizeChangeForm')">
+                        <option value="5" th:selected="${page.size == 5}">5</option>
+                        <option value="10" th:selected="${page.size == 10}">10</option>
+                        <option value="25" th:selected="${page.size == 25}">25</option>
+                        <option value="50" th:selected="${page.size == 50}">50</option>
+                        <option value="100" th:selected="${page.size == 100}">100</option>
+                    </select> entries
+                </label>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div id="dataTable_filter" class="dataTables_filter">
+            <form id="searchForm" method="GET">
+                <input type="hidden" name="page" th:value="${page.number + 1}">
+                <input type="hidden" name="size" th:value="${page.size}">
+                <label for="search-input">Search:</label>
+                <input type="search" name="search" id="search-input" class="form-control form-control-sm" placeholder="" th:value="${param.search}">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const searchInput = document.getElementById('search-input');
+
+            if (searchInput.value.length) {
+                searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+                searchInput.focus();
+            }
+        });
+
+        const submitForm = (formId) => {
+            document.getElementById(formId).submit();
+        }
+
+        /* search */
+        let timeout = null;
+
+        const search = () => {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+
+            timeout = setTimeout(() => {
+                submitForm('searchForm');
+            }, 500);
+        }
+
+        let searchInput = document.getElementById('search-input');
+
+        searchInput.addEventListener("keyup", search);
+    </script>
+</div>
+
+
+<div class="row" th:fragment="pagination(page, url)">
+    <div class="col-sm-12 col-md-5">
+        <div class="dataTables_info" th:if="${page.numberOfElements > 0}" th:text="'Showing ' + ${page.number * page.size + 1} + ' to ' + ${(page.number * page.size) + page.numberOfElements} + ' of ' + ${page.totalElements} + ' entries on ' + ${page.number + 1} + ' number page.'">
+        </div>
+        <div class="dataTables_info" th:unless="${page.numberOfElements > 0}" th:text="'Showing 0 of ' + ${page.totalElements} + ' entries on ' + ${page.number + 1} + ' number page.'">
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7" th:if="${page.totalPages > 0}">
+        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+            <ul class="pagination">
+                <li class="paginate_button page-item previous" th:classappend="${page.hasPrevious ? '' : 'disabled'}">
+                    <a th:href="@{${url}(page=${page.number}, size=${page.size})}" class="page-link">Previous</a>
+                </li>
+                <li class="paginate_button page-item" th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}" th:classappend="${page.number == pageNumber - 1 ? 'active' : ''}">
+                    <a th:href="@{${url}(page=${pageNumber}, size=${page.size})}" class="page-link" th:text="${pageNumber}"></a>
+                </li>
+                <li class="paginate_button page-item next" th:classappend="${page.hasNext ? '' : 'disabled'}">
+                    <a th:href="@{${url}(page=${page.number + 2}, size=${page.size})}" class="page-link">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

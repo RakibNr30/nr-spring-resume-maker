@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title} + ' | ' + ${globalAppSetting?.appTitle == null ? 'Resume Maker' : globalAppSetting.appTitle}"></title>
+
+    <link rel="stylesheet" th:href="@{/front/css/bootstrap-5.0.2.min.css}">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" th:href="@{/front/css/main.css}">
+    <link rel="stylesheet" th:href="@{/front/css/resume.css}">
+</head>
+<body>
+
+<div class="container">
+    <th:block th:replace="/fragments/front/header :: nav(0)"></th:block>
+
+    <th:block th:replace="${content}"></th:block>
+
+</div>
+
+<script th:src="@{/front/js/resume.js}"></script>
+
+</body>
+</html>

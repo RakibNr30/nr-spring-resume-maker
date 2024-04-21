@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'Social Account Edit', menuLevel1 = 'social-account', menuLevel2 = '')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            Social Account
+                        </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" th:href="@{/dashboard/cms/social-account}">
+                            <i class="fas fa-list"></i> Social Account List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/notifier" />
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Social Account Edit</h6>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/dashboard/cms/social-account/{id}/update(id=${socialAccount.id})}" th:object="${socialAccount}" method="POST">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-4 gx-3 mb-3">
+                            <th:block th:replace="/components/form::inputField(type = 'text', label = 'Name', name = 'name', value=${socialAccount.name}, required = true)"></th:block>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <th:block th:replace="/components/form::inputField(type = 'text', label = 'Icon', name = 'icon', value=${socialAccount.icon}, required = true)"></th:block>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <th:block th:replace="/components/form::inputField(type = 'text', label = 'URL', name = 'url', value=${socialAccount.url}, required = true)"></th:block>
+                        </div>
+                        <div class="col-12">
+                            <th:block th:replace="/components/form::buttons(reset = 'Reset', submit = 'Save Changes')"></th:block>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

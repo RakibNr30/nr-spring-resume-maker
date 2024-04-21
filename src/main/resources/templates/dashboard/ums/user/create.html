@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'User Add', menuLevel1 = 'ums', menuLevel2 = 'user')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            User
+                        </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" th:href="@{/dashboard/ums/user}">
+                            <i class="fas fa-list"></i> User List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/notifier" />
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">User Add</h6>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/dashboard/ums/user/store}" th:object="${user}" method="POST">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="name">Name</label>
+                            <input id="name" th:field="*{name}" class="form-control" th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}" type="text" placeholder="Enter name" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="username">Username</label>
+                            <input id="username" th:field="*{username}" class="form-control" th:classappend="${#fields.hasErrors('username') ? 'is-invalid' : ''}" type="text" placeholder="Enter username" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="dob">Date of Birth</label>
+                            <input id="dob" th:name="dob" class="form-control" th:classappend="${#fields.hasErrors('dob') ? 'is-invalid' : ''}" type="date" placeholder="Enter dob" th:value="${user.dob}" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="email">E-mail</label>
+                            <input id="email" th:field="*{email}" class="form-control" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}" type="email" placeholder="Enter email" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="mobile">Mobile</label>
+                            <input id="mobile" th:field="*{mobile}" class="form-control" th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' : ''}" type="text" placeholder="Enter mobile" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="address">Address</label>
+                            <input id="address" th:field="*{address}" class="form-control" th:classappend="${#fields.hasErrors('address') ? 'is-invalid' : ''}" type="text" placeholder="Enter address" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+                        </div>
+                        <div class="col-md-6 gx-3 mb-3">
+                            <label class="mb-1" for="details">About</label>
+                            <textarea id="about" th:field="*{about}" class="form-control" th:classappend="${#fields.hasErrors('about') ? 'is-invalid' : ''}" placeholder="Enter about" rows="6" required></textarea>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('about')}" th:errors="*{about}"></div>
+                        </div>
+                        <div class="col-md-6 gx-3">
+                            <label class="mb-1" for="roles">Roles</label>
+                            <select id="roles" th:field="*{roles}" class="form-control" th:classappend="${#fields.hasErrors('roles') ? 'is-invalid' : ''}" size="6" aria-label="multiple select" multiple required>
+                                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                            </select>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="float-right">
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

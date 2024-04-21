@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="/layouts/front::layout(~{::section})">
+<body>
+
+<section>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title float-start" th:text="${title}"></h5>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <th:block th:replace="/fragments/front/notifier"></th:block>
+
+                <div class="contact-form">
+                    <form th:action="@{/contact/update}" th:object="${contact}" method="POST">
+                        <div class="row">
+                            <input type="hidden" name="id" th:value="${contact.id}">
+                            <div class="col-md-4 mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input th:field="*{email}" id="email" type="email" placeholder="Enter email" class="form-control" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}" />
+                                <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="mobile" class="form-label">Mobile</label>
+                                <input th:field="*{mobile}" id="mobile" type="text" placeholder="Enter mobile" class="form-control" th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' : ''}" />
+                                <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input th:field="*{location}" id="location" type="text" placeholder="Enter location" class="form-control" th:classappend="${#fields.hasErrors('location') ? 'is-invalid' : ''}" />
+                                <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="details" class="form-label">Details</label>
+                                <textarea th:field="*{details}" id="details" placeholder="Enter details" class="form-control" th:classappend="${#fields.hasErrors('details') ? 'is-invalid' : ''}" rows="8" required></textarea>
+                                <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('details')}" th:errors="*{details}"></div>
+                            </div>
+                            <!--<div class="col-md-12 mb-3">
+                                <label for="photo" class="form-label">Photo</label>
+                                <input name="photo" id="photo" type="file" class="form-control" />
+                            </div>-->
+                            <div class="col-12">
+                                <div class="float-end">
+                                    <button type="reset" class="btn btn-danger">Reset</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

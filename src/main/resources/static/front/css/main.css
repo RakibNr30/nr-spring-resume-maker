@@ -1,0 +1,24 @@
+.text-justify {
+    text-align: justify !important;
+}
+.margin-left-1 {
+    margin-left: 1px !important;
+}
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+.margin-right-10 {
+    margin-right: 10px !important;
+}
+.margin-block-end-auto {
+    margin-block-end: auto !important;
+}
+.border-bottom-left-radius-0 {
+    border-bottom-left-radius: 0 !important;
+}
+.border-top-left-radius-0 {
+    border-top-left-radius: 0 !important;
+}
+.border-right-none {
+    border-right: none !important;
+}

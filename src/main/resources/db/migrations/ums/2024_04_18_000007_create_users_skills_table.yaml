@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_users_skills_table
+      author: Abdur Rakib
+      changes:
+        - createTable:
+            tableName: users_skills
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: users_skills_pkey
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: skill_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: proficiency
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+        - addAutoIncrement:
+            columnName: id
+            generationType: IDENTITY
+            tableName: users_skills
+        - addUniqueConstraint:
+            columnNames: user_id, skill_id
+            constraintName: uk_users_skills_user_id_skill_id
+            tableName: users_skills
+        - addForeignKeyConstraint:
+            constraintName: fk_users_skills_user_id
+            baseColumnNames: user_id
+            baseTableName: users_skills
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+        - addForeignKeyConstraint:
+            constraintName: fk_users_skills_skill_id
+            baseColumnNames: skill_id
+            baseTableName: users_skills
+            referencedColumnNames: id
+            referencedTableName: skills
+            validate: true
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'Role View', menuLevel1 = 'ums', menuLevel2 = 'role')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            Role
+                        </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" th:href="@{/dashboard/ums/role}">
+                            <i class="fas fa-list"></i> Role List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Role Show</h6>
+            </div>
+            <div class="card-body">
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-4 gx-3 mb-3">
+                        <label class="mb-1">Name</label>
+                        <span class="d-block" th:text="${role.name}"></span>
+                    </div>
+                    <div class="col-md-4 gx-3 mb-3">
+                        <label class="mb-1">Created At</label>
+                        <span class="d-block" th:text="${role.createdAt}"></span>
+                    </div>
+                    <div class="col-md-4 gx-3 mb-3">
+                        <label class="mb-1">Updated At</label>
+                        <span class="d-block" th:text="${role.updatedAt}"></span>
+                    </div>
+                    <div class="col-md-12 gx-3 mb-3">
+                        <label class="mb-1">Assigned To</label>
+                        <div>
+                            <th:block th:if="${role.users.size() > 0}">
+                                <span th:each="user, loop : ${role.users}">
+                                    <span th:text="${user.name}"></span> <span th:if="${not loop.last}">, </span>
+                                </span>
+                            </th:block>
+                            <th:block th:unless="${role.users.size() > 0}">
+                                Not Assigned Yet
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

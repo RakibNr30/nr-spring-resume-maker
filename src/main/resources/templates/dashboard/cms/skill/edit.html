@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'Skill Edit', menuLevel1 = 'skill', menuLevel2 = '')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            Skill
+                        </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" th:href="@{/dashboard/cms/skill}">
+                            <i class="fas fa-list"></i> Skill List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/notifier" />
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Skill Edit</h6>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/dashboard/cms/skill/{id}/update(id=${skill.id})}" th:object="${skill}" method="POST">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12 gx-3 mb-3">
+                            <th:block th:replace="/components/form::inputField(type = 'text', label = 'Name', name = 'name', value=${skill.name}, required = true)"></th:block>
+                        </div>
+                        <div class="col-md-12 gx-3 mb-3">
+                            <th:block th:replace="/components/form::textareaField(label = 'Details', name = 'details', value=${skill.details}, required = true)"></th:block>
+                        </div>
+                        <div class="col-12">
+                            <th:block th:replace="/components/form::buttons(reset = 'Reset', submit = 'Save Changes')"></th:block>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

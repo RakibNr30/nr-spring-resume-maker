@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'Profile - Language', menuLevel1 = 'profile', menuLevel2 = '')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            Profile - Language
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/profile-nav::active(item = 'profile-language')"></th:block>
+
+        <hr class="mt-0 mb-4">
+
+        <div class="row">
+            <div class="col-md-4">
+                <th:block th:replace="/fragments/dashboard/profile-left" />
+            </div>
+            <div class="col-md-8">
+                <th:block th:replace="/fragments/dashboard/notifier" />
+
+                <div class="card shadow mb-4" id="language">
+                    <div class="card-header py-3">Languages</div>
+                    <div class="card-body">
+                        <th:block th:each="userLanguage, loop : ${authUser.userLanguages}">
+                            <form th:action="@{/dashboard/profile/language/{id}/update(id=${userLanguage.id})}" method="POST">
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'language_id' + loop.index}">Language</label>
+                                        <select th:id="${'language_id' + loop.index}" th:name="language_id" class="form-control" aria-label="select" required>
+                                            <option value="" selected>Select Language</option>
+                                            <option th:each="language : ${languages}" th:value="${language.id}" th:text="${language.name}" th:selected="${userLanguage.language.id == language.id}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'proficiency' + loop.index}">Proficiency</label>
+                                        <select th:id="${'proficiency' + loop.index}" th:name="proficiency" class="form-control" aria-label="Select Proficiency" required>
+                                            <option value="" selected>Select Proficiency</option>
+                                            <option th:each="proficiency : ${T(com.resume.constant.Proficiency).values()}"
+                                                    th:value="${proficiency.getValue()}"
+                                                    th:text="${proficiency.getLabel()}" th:selected="${userLanguage.proficiency == proficiency.getValue()}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="float-right">
+                                            <a  class="btn btn-danger" th:onclick="'destroy(\'language-destroy' + ${loop.index} + '\')'">Remove</a>
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form th:id="${'language-destroy' + loop.index}" th:action="@{/dashboard/profile/language/{id}/destroy(id=${userLanguage.id})}" method="POST"></form>
+                        </th:block>
+
+                        <div class="d-block text-center">
+                            <button id="add-btn" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+                        </div>
+
+                        <form id="add-form" class="d-none" th:action="@{/dashboard/profile/language/store}" method="POST">
+                            <hr>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6 gx-3 mb-3">
+                                    <label class="mb-1" for="language_id">Language</label>
+                                    <select id="language_id" th:name="language_id" class="form-control" aria-label="select" required>
+                                        <option value="" selected>Select Language</option>
+                                        <option th:each="language : ${languages}" th:value="${language.id}" th:text="${language.name}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 gx-3 mb-3">
+                                    <label class="mb-1" for="proficiency">Proficiency</label>
+                                    <select id="proficiency" th:name="proficiency" class="form-control" aria-label="Select Proficiency" required>
+                                        <option value="" selected>Select Proficiency</option>
+                                        <option th:each="proficiency : ${T(com.resume.constant.Proficiency).values()}"
+                                                th:value="${proficiency.getValue()}"
+                                                th:text="${proficiency.getLabel()}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const destroy = (formId) => {
+            document.getElementById(formId).submit();
+        }
+    </script>
+
+</section>
+</body>
+
+</html>

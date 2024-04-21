@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="/layouts/auth::layout(~{::section})">
+
+<body>
+<section>
+    <div class="card o-hidden border-0 shadow-lg my-5 auth-form">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-12">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h2 text-gray-900 mb-4 text-left font-weight-bold" th:text="${globalAppSetting.appName == '' ? 'Resume Maker' : globalAppSetting.appName}"></h1>
+                            <h1 class="h4 text-gray-900 mb-4 text-left">Sign In</h1>
+                        </div>
+                        <form th:action="@{/auth/handle-login}" method="POST">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                                        Your login credentials are invalids.
+                                    </div>
+                                    <div class="alert alert-success" role="alert" th:if="${param.logout}">
+                                        You are logged out successfully.
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="mb-1" for="username">Name</label>
+                                        <input id="username" name="username" type="text" class="form-control form-control-user" placeholder="Username" value="admin" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="mb-1" for="password">Password</label>
+                                        <input id="password" name="password" type="password" class="form-control form-control-user" placeholder="Password" value="password" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

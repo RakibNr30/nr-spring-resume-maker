@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - include:
+      file: 2024_04_18_000001_create_skills_table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 2024_04_18_000002_create_interests_table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 2024_04_18_000003_create_languages_table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 2024_04_18_000004_create_social_accounts_table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 2024_04_18_000005_create_contacts_table.yaml
+      relativeToChangelogFile: true

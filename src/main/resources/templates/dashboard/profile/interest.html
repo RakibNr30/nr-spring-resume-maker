@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'Profile - Interest', menuLevel1 = 'profile', menuLevel2 = '')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            Profile - Interest
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/profile-nav::active(item = 'profile-interest')"></th:block>
+
+        <hr class="mt-0 mb-4">
+
+        <div class="row">
+            <div class="col-md-4">
+                <th:block th:replace="/fragments/dashboard/profile-left" />
+            </div>
+            <div class="col-md-8">
+                <th:block th:replace="/fragments/dashboard/notifier" />
+
+                <div class="card shadow mb-4" id="interest">
+                    <div class="card-header py-3">Interests</div>
+                    <div class="card-body">
+                        <th:block th:each="userInterest, loop : ${authUser.userInterests}">
+                            <form th:action="@{/dashboard/profile/interest/{id}/update(id=${userInterest.id})}" method="POST">
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-12 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'interest_id' + loop.index}">Interest</label>
+                                        <select th:id="${'interest_id' + loop.index}" th:name="interest_id" class="form-control" aria-label="select" required>
+                                            <option value="" selected>Select Interest</option>
+                                            <option th:each="interest : ${interests}" th:value="${interest.id}" th:text="${interest.name}" th:selected="${userInterest.interest.id == interest.id}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="float-right">
+                                            <a  class="btn btn-danger" th:onclick="'destroy(\'interest-destroy' + ${loop.index} + '\')'">Remove</a>
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form th:id="${'interest-destroy' + loop.index}" th:action="@{/dashboard/profile/interest/{id}/destroy(id=${userInterest.id})}" method="POST"></form>
+                        </th:block>
+
+                        <div class="d-block text-center">
+                            <button id="add-btn" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+                        </div>
+
+                        <form id="add-form" class="d-none" th:action="@{/dashboard/profile/interest/store}" method="POST">
+                            <hr>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-12 gx-3 mb-3">
+                                    <label class="mb-1" for="interest_id">Interest</label>
+                                    <select id="interest_id" th:name="interest_id" class="form-control" aria-label="select" required>
+                                        <option value="" selected>Select Interest</option>
+                                        <option th:each="interest : ${interests}" th:value="${interest.id}" th:text="${interest.name}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const destroy = (formId) => {
+            document.getElementById(formId).submit();
+        }
+    </script>
+
+</section>
+</body>
+
+</html>

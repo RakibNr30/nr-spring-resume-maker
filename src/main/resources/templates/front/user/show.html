@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="/layouts/front::layout(~{::body})">
+<body>
+    <div id="theme">
+        <header class="l-header" id="header">
+            <nav class="nav resume-container">
+                <a href="#" class="nav__logo">Abdur Rakib</a>
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item">
+                            <a href="#home" class="nav__link">
+                                <i class="nav__icon bx bx-home"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#about" class="nav__link">
+                                <i class="nav__icon bx bx-user"></i> About
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#education" class="nav__link">
+                                <i class="nav__icon bx bx-book"></i> Education
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#skills" class="nav__link">
+                                <i class="nav__icon bx bx-receipt"></i> Skills
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#experience" class="nav__link">
+                                <i class="nav__icon bx bx-briefcase-alt"></i> Experience
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#awards" class="nav__link">
+                                <i class="nav__icon bx bx-award"></i> Awards
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="bx bx-grid-alt"></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main resume-container">
+            <div class="resume">
+                <div class="resume__left">
+                    <section class="home" id="home">
+                        <div class="home__container section global-grid">
+                            <div class="home__data global-grid">
+                                <img th:src="@{/front/image/avatar.png}" class="home__img" alt="" />
+
+                                <h1 class="home__title"><b th:text="${user.name}"></b></h1>
+                                <h3 class="home__profession">Jr. Software Engineer</h3>
+                            </div>
+
+                            <div class="home__address global-grid">
+                                <div class="home__information">
+                                    <i class="home__icon bx bx-map"></i> <span th:text="${user.address}"></span>
+                                </div>
+                                <div class="home__information">
+                                    <i class="home__icon bx bx-envelope"></i> <span th:text="${user.email}"></span>
+                                </div>
+                                <div class="home__information">
+                                    <i class="home__icon bx bx-phone"></i> <span th:text="${user.mobile}"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <i class="bx bx-moon change-theme" title="Theme" id="theme-changer"></i>
+                    </section>
+
+                    <section class="section social" th:if="${user.userSocialAccounts.size() > 0}">
+                        <div class="section-title-container">
+                            <h2 class="section-title">Social</h2>
+                        </div>
+                        <div class="social__container bg-grid">
+                            <a th:href="${#strings.replace(userSocialAccount.socialAccount.url, '[username]', userSocialAccount.username)}" target="_blank" class="social__link" th:each="userSocialAccount : ${user.userSocialAccounts}">
+                                <i th:class="'social__icon ' + ${userSocialAccount.socialAccount.icon}"></i> <span th:text="${userSocialAccount.socialAccount.name}"></span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <th:block th:if="${user.userSkills.size() > 0}">
+                        <section class="section skills" id="skills">
+                            <div class="section-title-container">
+                                <h2 class="section-title">Skills</h2>
+                            </div>
+
+                            <div class="skills__content">
+                                <ul class="skills__data mt-0 mb-0">
+                                    <li class="skills__name" th:each="userSkill : ${user.userSkills}" th:text="${userSkill.skill.name}"></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </th:block>
+
+                    <th:block th:if="${user.userEducations.size() > 0}">
+                        <section class="section education" id="education">
+                            <div class="section-title-container">
+                                <h2 class="section-title">Education</h2>
+                            </div>
+
+                            <div class="education__container global-grid">
+                                <div class="education__content" th:each="education, loop : ${user.userEducations}">
+                                    <div class="education__time">
+                                        <span class="education__rounder"></span>
+                                        <span class="education__line" th:if="${not loop.last}"></span>
+                                    </div>
+                                    <div class="education__data global-grid">
+                                        <h3 class="education__title" th:text="${education.degree}"></h3>
+                                        <span class="education__studies" th:text="${education.institute}"></span>
+                                        <span class="education__year">
+                                            <span th:text="${#temporals.format(education.startDate, 'MMM dd, yyyy')}"></span> - <span th:text="${education.endDate == null ? 'Present' : #temporals.format(education.endDate, 'MMM dd, yyyy')}"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </th:block>
+
+                    <section class="section languages" id="languages" th:if="${user.userLanguages.size() > 0}">
+                        <div class="section-title-container">
+                            <h2 class="section-title">Languages</h2>
+                        </div>
+
+                        <div class="languages__container">
+                            <ul class="languages__content global-grid">
+                                <li class="languages__name" th:each="userLanguage : ${user.userLanguages}">
+                                    <span class="languages__circle"></span> <span th:text="${userLanguage.language.name}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="section interests" id="interests" th:if="${user.userInterests.size() > 0}">
+                        <div class="section-title-container">
+                            <h2 class="section-title">Interests</h2>
+                        </div>
+
+                        <div class="interests__container global-grid">
+                            <div class="interests__content" th:each="userInterest : ${user.userInterests}">
+                                <i class="interests__icon bx bx-check-square"></i>
+                                <span class="interests__name" th:text="${userInterest.interest.name}"></span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="resume__right">
+                    <section class="section about" id="about" th:if="${!#strings.isEmpty(user.about)}">
+                        <div class="section-title-container">
+                            <h2 class="section-title">About Me</h2>
+                        </div>
+                        <p class="about__description" th:text="${user.about}"></p>
+                    </section>
+
+                    <th:block th:if="${user.userExperiences.size() > 0}">
+                        <section class="section experience" id="experience">
+                            <div class="section-title-container">
+                                <h2 class="section-title">Experience</h2>
+                            </div>
+
+                            <div class="experience__container global-grid">
+                                <div class="experience__content" th:each="experience, loop : ${user.userExperiences}">
+                                    <div class="experience__time">
+                                        <span class="experience__rounder"></span>
+                                        <span class="experience__line" th:if="${not loop.last}"></span>
+                                    </div>
+
+                                    <div class="experience__data global-grid">
+                                        <h3 class="experience__title" th:text="${experience.designation}"></h3>
+                                        <span class="experience__company"><span th:text="${#temporals.format(experience.startDate, 'MMM dd, yyyy')}"></span> - <span th:text="${experience.endDate == null ? 'Present' : #temporals.format(experience.endDate, 'MMM dd, yyyy')}"></span> | <span th:text="${experience.organization}"></span></span>
+                                        <div class="experience__description">
+                                            <ul class="experience__resp">
+                                                <!--<li class="experience__resp_name">
+                                                    <span class="experience__resp__circle"></span>High scalable system design.
+                                                </li>
+                                                <li class="experience__resp_name">
+                                                    <span class="experience__resp__circle"></span>Ensured high system eﬃciency and reliability for handling high traﬃc.
+                                                </li>
+                                                <li class="experience__resp_name">
+                                                    <span class="experience__resp__circle"></span>Complex Code Review.
+                                                </li>-->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </th:block>
+
+                    <th:block th:if="${user.userAwards.size() > 0}">
+                        <section class="section awards" id="awards">
+                            <div class="section-title-container">
+                                <h2 class="section-title">Awards</h2>
+                            </div>
+
+                            <div class="awards__container global-grid">
+                                <div class="awards__content" th:each="award, loop : ${user.userAwards}">
+                                    <h3 class="awards__title" th:text="${award.title}"></h3>
+                                    <p class="awards__institute" th:text="${award.institute}"></p>
+                                    <p class="awards__description" th:text="${award.details}"></p>
+                                </div>
+                            </div>
+                        </section>
+                    </th:block>
+                </div>
+            </div>
+        </main>
+
+        <a href="#" class="scrolltop" id="scroll-top">
+            <i class="bx bx-up-arrow-alt scrolltop__icon"></i>
+        </a>
+    </div>
+</body>
+</html>

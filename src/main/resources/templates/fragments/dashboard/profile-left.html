@@ -1,0 +1,50 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">Profile Picture</div>
+    <div class="card-body text-center">
+        <img id="imagePreview" onclick="triggerFileInput('hiddenFileInput')" class="img-account-profile rounded-circle mb-2" height="100" width="100" th:src="@{/backend/img/user-placeholder.svg}" alt="">
+
+        <form th:action="@{/store-profile-photo}" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-12 gx-3 mb-3">
+                    <input id="hiddenFileInput" name="photo" class="form-control d-none" type="file" accept="image/*" onchange="previewImage(event, 'imagePreview')" />
+                    <div id="fileInvalidFeedback" class="invalid-feedback d-block"></div>
+                </div>
+                <div class="col-md-12 gx-3 mb-3">
+                    <button class="btn btn-primary" type="submit">Upload new Image</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const triggerFileInput = (id) => {
+        document.getElementById(id).click();
+    }
+
+    const previewImage = (event, id) => {
+        let input = event.target;
+        const preview = document.getElementById(id);
+        const previousSrc = preview.src;
+
+        const file = input.files[0];
+
+        if (file) {
+
+            const fileType = file.type;
+
+            if (fileType && fileType.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('fileInvalidFeedback').innerText = "Must be choose an image file.";
+            }
+        } else {
+            preview.src = previousSrc;
+        }
+    }
+</script>

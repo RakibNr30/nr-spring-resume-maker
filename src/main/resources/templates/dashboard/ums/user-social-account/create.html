@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'User Social Account Add', menuLevel1 = 'ums', menuLevel2 = 'user-social-account')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            User Social Account
+                        </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" th:href="@{/dashboard/ums/user-social-account}">
+                            <i class="fas fa-list"></i> User Social Account List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/notifier" />
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">User Social Account Add</h6>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/dashboard/ums/user-social-account/store}" th:object="${userSocialAccount}" method="POST">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-4 gx-3">
+                            <label class="mb-1" for="user_id">User</label>
+                            <select id="user_id" th:name="user_id" class="form-control" th:classappend="${#fields.hasErrors('user') ? 'is-invalid' : ''}" aria-label="select" required>
+                                <option value="" selected>Select User</option>
+                                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+                            </select>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3">
+                            <label class="mb-1" for="social_account_id">Social Account</label>
+                            <select id="social_account_id" th:name="social_account_id" class="form-control" th:classappend="${#fields.hasErrors('socialAccount') ? 'is-invalid' : ''}" aria-label="select" required>
+                                <option value="" selected>Select Social Account</option>
+                                <option th:each="socialAccount : ${socialAccounts}" th:value="${socialAccount.id}" th:text="${socialAccount.name}"></option>
+                            </select>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('socialAccount')}" th:errors="*{socialAccount}"></div>
+                        </div>
+                        <div class="col-md-4 gx-3 mb-3">
+                            <label class="mb-1" for="username">Username</label>
+                            <input id="username" th:field="*{username}" class="form-control" th:classappend="${#fields.hasErrors('username') ? 'is-invalid' : ''}" type="text" placeholder="Enter username" required>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                        </div>
+                        <div class="col-12">
+                            <div class="float-right">
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

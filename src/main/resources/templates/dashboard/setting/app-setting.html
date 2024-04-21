@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'App Setting', menuLevel1 = 'setting', menuLevel2 = 'app-setting')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            App Setting
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/notifier" />
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">App Setting</h6>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/dashboard/setting/app-setting/update}" th:object="${appSetting}" method="POST">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6 gx-3 mb-3">
+                            <th:block th:replace="/components/form::inputField(type = 'text', label = 'App Name', name = 'appName', value=${appSetting.appName}, required = true)"></th:block>
+                        </div>
+                        <div class="col-md-6 gx-3 mb-3">
+                            <th:block th:replace="/components/form::inputField(type = 'text', label = 'App Title', name = 'appTitle', value=${appSetting.appTitle}, required = true)"></th:block>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="float-right">
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

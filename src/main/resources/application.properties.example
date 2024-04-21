@@ -1,0 +1,39 @@
+# datasource properties
+spring.datasource.driver=
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+# mongo datasource properties
+spring.data.mongodb.uri=mongodb://user:pass@127.0.0.1:27017/your-db-name
+
+# jpa properties
+spring.jpa.show-sql=false
+spring.jpa.format-sql=false
+spring.jpa.properties.hibernate.dialect=
+spring.jpa.persistence-unit=
+
+# liquibase properties
+spring.liquibase.change-log=classpath:db/migrations/changelog-master.yaml
+spring.liquibase.enabled=true
+
+# mongo liquibase properties
+spring.mongo-liquibase.change-log=db/migrations/changelog-mongo-master.yaml
+spring.mongo-liquibase.enabled=true
+
+# mongo liquibase datasource properties
+spring.mongo-liquibase.datasource-uri=mongodb://127.0.0.1:27017/your-db-name
+spring.mongo-liquibase.datasource-username=
+spring.mongo-liquibase.datasource-password=
+
+# data seed properties
+spring.data-seed.enabled=false
+
+# web properties
+spring.mvc.static-path-pattern=/**
+spring.mvc.static-path-location=classpath:static/
+
+# view resolver (thymeleaf) properties
+spring.thymeleaf.cacheable=false
+spring.thymeleaf.prefix=/templates/
+spring.thymeleaf.suffix=.html

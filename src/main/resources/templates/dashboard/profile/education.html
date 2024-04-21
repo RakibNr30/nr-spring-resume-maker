@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'Profile - Education', menuLevel1 = 'profile', menuLevel2 = '')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            Profile - Education
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/profile-nav::active(item = 'profile-education')"></th:block>
+
+        <hr class="mt-0 mb-4">
+
+        <div class="row">
+            <div class="col-md-4">
+                <th:block th:replace="/fragments/dashboard/profile-left" />
+            </div>
+            <div class="col-md-8">
+                <th:block th:replace="/fragments/dashboard/notifier" />
+
+                <div class="card shadow mb-4" id="education">
+                    <div class="card-header py-3">Educations</div>
+                    <div class="card-body">
+                        <th:block th:each="userEducation, loop : ${authUser.userEducations}">
+                            <form th:action="@{/dashboard/profile/education/{id}/update(id=${userEducation.id})}" method="POST">
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'institute' + loop.index}">Institute</label>
+                                        <input th:id="${'institute' + loop.index}" th:name="institute" class="form-control" type="text" placeholder="Enter institute" th:value="${userEducation.institute}" required>
+                                    </div>
+                                    <div class="col-md-6 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'degree' + loop.index}">Degree</label>
+                                        <input th:id="${'degree' + loop.index}" th:name="degree" class="form-control" type="text" placeholder="Enter degree" th:value="${userEducation.degree}" required>
+                                    </div>
+                                    <div class="col-md-4 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'start_date' + loop.index}">Start Date</label>
+                                        <input th:id="${'start_date' + loop.index}" th:name="startDate" class="form-control" type="date" placeholder="Enter start date" th:value="${userEducation.startDate}" required>
+                                    </div>
+                                    <div class="col-md-4 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'end_date' + loop.index}">End Date</label>
+                                        <input th:id="${'end_date' + loop.index}" th:name="endDate" class="form-control" type="date" placeholder="Enter end date" th:value="${userEducation.endDate}">
+                                    </div>
+                                    <div class="col-md-4 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'grade' + loop.index}">Grade</label>
+                                        <input th:id="${'grade' + loop.index}" th:name="grade" class="form-control" type="text" placeholder="Enter grade" th:value="${userEducation.grade}" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="float-right">
+                                            <a  class="btn btn-danger" th:onclick="'destroy(\'education-destroy' + ${loop.index} + '\')'">Remove</a>
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form th:id="${'education-destroy' + loop.index}" th:action="@{/dashboard/profile/education/{id}/destroy(id=${userEducation.id})}" method="POST"></form>
+                        </th:block>
+
+                        <div class="d-block text-center">
+                            <button id="add-btn" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+                        </div>
+
+                        <form id="add-form" class="d-none" th:action="@{/dashboard/profile/education/store}" method="POST">
+                            <hr>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6 gx-3 mb-3">
+                                    <label class="mb-1" for="institute">Institute</label>
+                                    <input id="institute" th:name="institute" class="form-control" type="text" placeholder="Enter institute" required>
+                                </div>
+                                <div class="col-md-6 gx-3 mb-3">
+                                    <label class="mb-1" for="degree">Degree</label>
+                                    <input id="degree" th:name="degree" class="form-control" type="text" placeholder="Enter degree" required>
+                                </div>
+                                <div class="col-md-4 gx-3 mb-3">
+                                    <label class="mb-1" for="start_date">Start Date</label>
+                                    <input id="start_date" th:name="startDate" class="form-control" type="date" placeholder="Enter start date" required>
+                                </div>
+                                <div class="col-md-4 gx-3 mb-3">
+                                    <label class="mb-1" for="end_date">End Date</label>
+                                    <input id="end_date" th:name="endDate" class="form-control" type="date" placeholder="Enter end date">
+                                </div>
+                                <div class="col-md-4 gx-3 mb-3">
+                                    <label class="mb-1" for="grade">Grade</label>
+                                    <input id="grade" th:name="grade" class="form-control" type="text" placeholder="Enter grade" required>
+                                </div>
+                                <div class="col-12">
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const destroy = (formId) => {
+            document.getElementById(formId).submit();
+        }
+    </script>
+
+</section>
+</body>
+
+</html>

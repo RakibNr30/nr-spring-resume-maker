@@ -1,0 +1,6 @@
+# config for run update cmd
+changeLogFile=src/main/resources/db/migrations/changelog-master.yaml
+driver=
+url=
+username=
+password=

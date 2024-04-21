@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="inputField(type, label, name, value, required)">
+    <label class="mb-1" th:for="${name}" th:text="${label}"></label>
+    <input th:id="${name}" th:name="${name}" th:value="${value}" class="form-control" th:classappend="${#fields.hasErrors(name) ? 'is-invalid' : ''}" type="text" th:placeholder="${'Enter ' + #strings.toLowerCase(label)}" th:required="${required}">
+    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors(name)}" th:each="error : ${#fields.errors(name)}" th:text="${error.toString()}"></div>
+</th:block>
+
+<th:block th:fragment="textareaField(label, name, value, required)">
+    <label class="mb-1" th:for="${name}" th:text="${label}"></label>
+    <textarea th:id="${name}" th:name="${name}" th:text="${value}" class="form-control" th:classappend="${#fields.hasErrors(name) ? 'is-invalid' : ''}" th:placeholder="${'Enter ' + #strings.toLowerCase(label)}" rows="8" th:required="${required}"></textarea>
+    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors(name)}" th:each="error : ${#fields.errors(name)}" th:text="${error.toString()}"></div>
+</th:block>
+
+<th:block th:fragment="selectField(label, name, value, items, required)">
+    <label class="mb-1" th:for="${name}" th:text="${label}"></label>
+    <select th:id="${name}" th:name="${name}" class="form-control" th:classappend="${#fields.hasErrors(name) ? 'is-invalid' : ''}" th:aria-label="Select ${label}" required>
+        <option value="" th:text="${'Select ' + label}" selected></option>
+        <option th:each="item : ${items}" th:value="${item.value}" th:text="${item.label}"></option>
+    </select>
+    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors(name)}" th:each="error : ${#fields.errors(name)}" th:text="${error.toString()}"></div>
+</th:block>
+
+<th:block th:fragment="buttons(reset, submit)">
+    <div class="float-right">
+        <button type="reset" class="btn btn-danger" th:text="${reset}"></button>
+        <button type="submit" class="btn btn-primary" th:text="${submit}"></button>
+    </div>
+</th:block>
+
+</body>
+
+</html>

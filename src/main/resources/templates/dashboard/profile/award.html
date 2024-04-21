@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layouts/dashboard::layout(content = ~{::section}, title = 'Profile - Award', menuLevel1 = 'profile', menuLevel2 = '')">
+<body>
+<section>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <span class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                            Profile - Award
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+
+        <th:block th:replace="/fragments/dashboard/profile-nav::active(item = 'profile-award')"></th:block>
+
+        <hr class="mt-0 mb-4">
+
+        <div class="row">
+            <div class="col-md-4">
+                <th:block th:replace="/fragments/dashboard/profile-left" />
+            </div>
+            <div class="col-md-8">
+                <th:block th:replace="/fragments/dashboard/notifier" />
+
+                <div class="card shadow mb-4" id="award">
+                    <div class="card-header py-3">Awards</div>
+                    <div class="card-body">
+                        <th:block th:each="userAward, loop : ${authUser.userAwards}">
+                            <form th:action="@{/dashboard/profile/award/{id}/update(id=${userAward.id})}" method="POST">
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'title' + loop.index}">Title</label>
+                                        <input th:id="${'title' + loop.index}" th:name="title" class="form-control" type="text" placeholder="Enter title" th:value="${userAward.title}" required>
+                                    </div>
+                                    <div class="col-md-6 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'institute' + loop.index}">Institute</label>
+                                        <input th:id="${'institute' + loop.index}" th:name="institute" class="form-control" type="text" placeholder="Enter institute" th:value="${userAward.institute}" required>
+                                    </div>
+                                    <div class="col-md-12 gx-3 mb-3">
+                                        <label class="mb-1" th:for="${'details' + loop.index}">Details</label>
+                                        <textarea th:id="${'details' + loop.index}" th:name="details" class="form-control" type="text" placeholder="Enter details" rows="4" th:text="${userAward.details}" required></textarea>
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <div class="float-right">
+                                            <a  class="btn btn-danger" th:onclick="'destroy(\'award-destroy' + ${loop.index} + '\')'">Remove</a>
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form th:id="${'award-destroy' + loop.index}" th:action="@{/dashboard/profile/award/{id}/destroy(id=${userAward.id})}" method="POST"></form>
+                        </th:block>
+
+                        <div class="d-block text-center">
+                            <button id="add-btn" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+                        </div>
+
+                        <form id="add-form" class="d-none" th:action="@{/dashboard/profile/award/store}" method="POST">
+                            <hr>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6 gx-3 mb-3">
+                                    <label class="mb-1" for="title">Title</label>
+                                    <input id="title" th:name="title" class="form-control" type="text" placeholder="Enter title" required>
+                                </div>
+                                <div class="col-md-6 gx-3 mb-3">
+                                    <label class="mb-1" for="institute">Institute</label>
+                                    <input id="institute" th:name="institute" class="form-control" type="text" placeholder="Enter institute" required>
+                                </div>
+                                <div class="col-md-12 gx-3 mb-3">
+                                    <label class="mb-1" th:for="details">Details</label>
+                                    <textarea th:id="details" th:name="details" class="form-control" type="text" placeholder="Enter details" rows="4" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const destroy = (formId) => {
+            document.getElementById(formId).submit();
+        }
+    </script>
+
+</section>
+</body>
+
+</html>

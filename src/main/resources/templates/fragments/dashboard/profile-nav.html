@@ -1,0 +1,10 @@
+<nav class="nav nav-borders" th:fragment="active(item)">
+    <a class="nav-link ml-0" th:classappend="${item == 'profile-account'    ? 'active' : ''}" th:href="@{/dashboard/profile}">Account</a>
+    <a class="nav-link"      th:classappend="${item == 'profile-education'  ? 'active' : ''}" th:href="@{/dashboard/profile/education}">Education</a>
+    <a class="nav-link"      th:classappend="${item == 'profile-experience' ? 'active' : ''}" th:href="@{/dashboard/profile/experience}">Experience</a>
+    <a class="nav-link"      th:classappend="${item == 'profile-award'      ? 'active' : ''}" th:href="@{/dashboard/profile/award}">Award</a>
+    <a class="nav-link"      th:classappend="${item == 'profile-skill'      ? 'active' : ''}" th:href="@{/dashboard/profile/skill}">Skill</a>
+    <a class="nav-link"      th:classappend="${item == 'profile-interest'   ? 'active' : ''}" th:href="@{/dashboard/profile/interest}">Interest</a>
+    <a class="nav-link"      th:classappend="${item == 'profile-social'     ? 'active' : ''}" th:href="@{/dashboard/profile/social}">Social</a>
+    <a class="nav-link"      th:classappend="${item == 'profile-language'   ? 'active' : ''}" th:href="@{/dashboard/profile/language}">Language</a>
+</nav>

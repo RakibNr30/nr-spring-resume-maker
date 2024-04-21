@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_languages_table
+      author: Abdur Rakib
+      changes:
+        - createTable:
+            tableName: languages
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: languages_pkey
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: details
+                  type: VARCHAR(65535)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+        - addAutoIncrement:
+            columnName: id
+            generationType: IDENTITY
+            tableName: languages
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: uk_languages_name
+            tableName: languages

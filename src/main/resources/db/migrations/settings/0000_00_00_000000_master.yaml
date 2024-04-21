@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: 2024_04_18_000001_create_app_settings_collection.yaml
+      relativeToChangelogFile: true
