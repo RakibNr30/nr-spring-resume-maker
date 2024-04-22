@@ -8,6 +8,7 @@ import com.resume.entity.cms.SocialAccount;
 import com.resume.entity.ums.*;
 import com.resume.helper.NotifierHelper;
 import com.resume.helper.ValidationHelper;
+import com.resume.route.WebRoutes;
 import com.resume.service.cms.InterestService;
 import com.resume.service.cms.LanguageService;
 import com.resume.service.cms.SkillService;
@@ -26,7 +27,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/dashboard/profile")
 public class UserProfileController {
 
     private final UserService userService;
@@ -93,7 +93,7 @@ public class UserProfileController {
     }
 
     /* Account */
-    @RequestMapping
+    @RequestMapping(value = WebRoutes.PROFILE_ACCOUNT)
     public String index(Model model, RedirectAttributes attributes) {
         if (this.authUser == null) {
             new NotifierHelper(attributes).message("Account not found.").error();
@@ -105,7 +105,7 @@ public class UserProfileController {
         return "dashboard/profile/index";
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_ACCOUNT_UPDATE, method = RequestMethod.POST)
     public String update(@Valid @ModelAttribute UserAccountDto userAccountDto, BindingResult result, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -139,7 +139,7 @@ public class UserProfileController {
     }
 
     /* Education */
-    @RequestMapping("/education")
+    @RequestMapping(WebRoutes.PROFILE_EDUCATION)
     public String education(Model model, RedirectAttributes attributes) {
 
         if (this.authUser == null) {
@@ -152,7 +152,7 @@ public class UserProfileController {
         return "dashboard/profile/education";
     }
 
-    @RequestMapping(value = "/education/store", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_EDUCATION_STORE, method = RequestMethod.POST)
     public String storeEducation(@Valid @ModelAttribute UserEducation userEducation, BindingResult result, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -177,7 +177,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/education";
     }
 
-    @RequestMapping(value = "/education/{id}/update", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_EDUCATION_UPDATE, method = RequestMethod.POST)
     public String updateEducation(@PathVariable("id") Long id, @Valid @ModelAttribute UserEducation userEducation, BindingResult result, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -204,7 +204,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/education";
     }
 
-    @RequestMapping(value = "/education/{id}/destroy", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_EDUCATION_DESTROY, method = RequestMethod.POST)
     public String destroyEducation(@PathVariable("id") Long id, RedirectAttributes attributes) {
 
         UserEducation userEducation = this.userEducationService.findById(id);
@@ -225,7 +225,7 @@ public class UserProfileController {
     }
 
     /* Experience */
-    @RequestMapping("/experience")
+    @RequestMapping(WebRoutes.PROFILE_EXPERIENCE)
     public String experience(Model model, RedirectAttributes attributes) {
 
         if (this.authUser == null) {
@@ -238,7 +238,7 @@ public class UserProfileController {
         return "dashboard/profile/experience";
     }
 
-    @RequestMapping(value = "/experience/store", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_EXPERIENCE_STORE, method = RequestMethod.POST)
     public String storeExperience(@Valid @ModelAttribute UserExperience userExperience, BindingResult result, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -263,7 +263,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/experience";
     }
 
-    @RequestMapping(value = "/experience/{id}/update", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_EXPERIENCE_UPDATE, method = RequestMethod.POST)
     public String updateExperience(@PathVariable("id") Long id, @Valid @ModelAttribute UserExperience userExperience, BindingResult result, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -290,7 +290,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/experience";
     }
 
-    @RequestMapping(value = "/experience/{id}/destroy", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_EXPERIENCE_DESTROY, method = RequestMethod.POST)
     public String destroyExperience(@PathVariable("id") Long id, RedirectAttributes attributes) {
 
         UserExperience userExperience = this.userExperienceService.findById(id);
@@ -311,7 +311,7 @@ public class UserProfileController {
     }
 
     /* Award */
-    @RequestMapping("/award")
+    @RequestMapping(WebRoutes.PROFILE_AWARD)
     public String award(Model model, RedirectAttributes attributes) {
 
         if (this.authUser == null) {
@@ -324,7 +324,7 @@ public class UserProfileController {
         return "dashboard/profile/award";
     }
 
-    @RequestMapping(value = "/award/store", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_AWARD_STORE, method = RequestMethod.POST)
     public String storeAward(@Valid @ModelAttribute UserAward userAward, BindingResult result, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -349,7 +349,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/award";
     }
 
-    @RequestMapping(value = "/award/{id}/update", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_AWARD_UPDATE, method = RequestMethod.POST)
     public String updateAward(@PathVariable("id") Long id, @Valid @ModelAttribute UserAward userAward, BindingResult result, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -376,7 +376,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/award";
     }
 
-    @RequestMapping(value = "/award/{id}/destroy", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_AWARD_DESTROY, method = RequestMethod.POST)
     public String destroyAward(@PathVariable("id") Long id, RedirectAttributes attributes) {
 
         UserAward userAward = this.userAwardService.findById(id);
@@ -397,7 +397,7 @@ public class UserProfileController {
     }
 
     /* Interest */
-    @RequestMapping("/interest")
+    @RequestMapping(WebRoutes.PROFILE_INTEREST)
     public String interest(Model model, RedirectAttributes attributes) {
 
         if (this.authUser == null) {
@@ -413,7 +413,7 @@ public class UserProfileController {
         return "dashboard/profile/interest";
     }
 
-    @RequestMapping(value = "/interest/store", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_INTEREST_STORE, method = RequestMethod.POST)
     public String storeInterest(@Valid @ModelAttribute UserInterest userInterest, BindingResult result, @RequestParam("interest_id") Long interestId, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -445,7 +445,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/interest";
     }
 
-    @RequestMapping(value = "/interest/{id}/update", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_INTEREST_UPDATE, method = RequestMethod.POST)
     public String updateInterest(@PathVariable("id") Long id, @Valid @ModelAttribute UserInterest userInterest, BindingResult result, @RequestParam("interest_id") Long interestId, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -479,7 +479,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/interest";
     }
 
-    @RequestMapping(value = "/interest/{id}/destroy", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_INTEREST_DESTROY, method = RequestMethod.POST)
     public String destroyInterest(@PathVariable("id") Long id, RedirectAttributes attributes) {
 
         UserInterest userInterest = this.userInterestService.findById(id);
@@ -500,7 +500,7 @@ public class UserProfileController {
     }
 
     /* Social */
-    @RequestMapping("/social")
+    @RequestMapping(WebRoutes.PROFILE_SOCIAL)
     public String socialAccount(Model model, RedirectAttributes attributes) {
 
         if (this.authUser == null) {
@@ -516,7 +516,7 @@ public class UserProfileController {
         return "dashboard/profile/social";
     }
 
-    @RequestMapping(value = "/social/store", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_SOCIAL_STORE, method = RequestMethod.POST)
     public String storeSocialAccount(@Valid @ModelAttribute UserSocialAccount userSocialAccount, BindingResult result, @RequestParam("social_account_id") Long socialAccountId, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -548,7 +548,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/social";
     }
 
-    @RequestMapping(value = "/social/{id}/update", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_SOCIAL_UPDATE, method = RequestMethod.POST)
     public String updateSocialAccount(@PathVariable("id") Long id, @Valid @ModelAttribute UserSocialAccount userSocialAccount, BindingResult result, @RequestParam("social_account_id") Long socialAccountId, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -582,7 +582,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/social";
     }
 
-    @RequestMapping(value = "/social/{id}/destroy", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_SOCIAL_DESTROY, method = RequestMethod.POST)
     public String destroySocialAccount(@PathVariable("id") Long id, RedirectAttributes attributes) {
 
         UserSocialAccount userSocialAccount = this.userSocialAccountService.findById(id);
@@ -603,7 +603,7 @@ public class UserProfileController {
     }
 
     /* Language */
-    @RequestMapping("/language")
+    @RequestMapping(WebRoutes.PROFILE_LANGUAGE)
     public String language(Model model, RedirectAttributes attributes) {
 
         if (this.authUser == null) {
@@ -619,7 +619,7 @@ public class UserProfileController {
         return "dashboard/profile/language";
     }
 
-    @RequestMapping(value = "/language/store", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_LANGUAGE_STORE, method = RequestMethod.POST)
     public String storeLanguage(@Valid @ModelAttribute UserLanguage userLanguage, BindingResult result, @RequestParam("language_id") Long languageId, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -651,7 +651,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/language";
     }
 
-    @RequestMapping(value = "/language/{id}/update", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_LANGUAGE_UPDATE, method = RequestMethod.POST)
     public String updateLanguage(@PathVariable("id") Long id, @Valid @ModelAttribute UserLanguage userLanguage, BindingResult result, @RequestParam("language_id") Long languageId, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -685,7 +685,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/language";
     }
 
-    @RequestMapping(value = "/language/{id}/destroy", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_LANGUAGE_DESTROY, method = RequestMethod.POST)
     public String destroyLanguage(@PathVariable("id") Long id, RedirectAttributes attributes) {
 
         UserLanguage userLanguage = this.userLanguageService.findById(id);
@@ -706,7 +706,7 @@ public class UserProfileController {
     }
 
     /* Skill */
-    @RequestMapping("/skill")
+    @RequestMapping(WebRoutes.PROFILE_SKILL)
     public String skill(Model model, RedirectAttributes attributes) {
 
         if (this.authUser == null) {
@@ -722,7 +722,7 @@ public class UserProfileController {
         return "dashboard/profile/skill";
     }
 
-    @RequestMapping(value = "/skill/store", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_SKILL_STORE, method = RequestMethod.POST)
     public String storeSkill(@Valid @ModelAttribute UserSkill userSkill, BindingResult result, @RequestParam("skill_id") Long skillId, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -754,7 +754,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/skill";
     }
 
-    @RequestMapping(value = "/skill/{id}/update", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_SKILL_UPDATE, method = RequestMethod.POST)
     public String updateSkill(@PathVariable("id") Long id, @Valid @ModelAttribute UserSkill userSkill, BindingResult result, @RequestParam("skill_id") Long skillId, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
@@ -788,7 +788,7 @@ public class UserProfileController {
         return "redirect:/dashboard/profile/skill";
     }
 
-    @RequestMapping(value = "/skill/{id}/destroy", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_SKILL_DESTROY, method = RequestMethod.POST)
     public String destroySkill(@PathVariable("id") Long id, RedirectAttributes attributes) {
 
         UserSkill userSkill = this.userSkillService.findById(id);
@@ -809,7 +809,7 @@ public class UserProfileController {
     }
 
     /* upload profile photo */
-    @RequestMapping(value = "/store-profile-photo", method = RequestMethod.POST)
+    @RequestMapping(value = WebRoutes.PROFILE_PHOTO_STORE, method = RequestMethod.POST)
     public String storeProfilePhoto(@RequestParam("photo") MultipartFile photo, RedirectAttributes attributes) {
 
         System.out.println(photo);

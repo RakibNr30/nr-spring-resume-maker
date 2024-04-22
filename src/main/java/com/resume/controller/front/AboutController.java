@@ -1,13 +1,13 @@
 package com.resume.controller.front;
 
-import com.resume.route.Web;
+import com.resume.route.WebRoutes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(path = Web.ABOUT)
+@RequestMapping(path = WebRoutes.ABOUT)
 public class AboutController {
 
     @ModelAttribute

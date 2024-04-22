@@ -1,7 +1,7 @@
 package com.resume.controller.front;
 
 import com.resume.entity.ums.User;
-import com.resume.route.Web;
+import com.resume.route.WebRoutes;
 import com.resume.service.ums.UserService;
 import com.resume.helper.NotifierHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = Web.USER)
+@RequestMapping(path = WebRoutes.USER)
 public class UserController {
 
     private final UserService userService;
